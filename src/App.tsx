@@ -26,138 +26,196 @@ export function App() {
     formulario.reset()
   }
 
+  const erro = formulario.formState.errors
+
   return (
-    <div className="min-h-screen bg-gray-100 p-6">
-      <div className="max-w-4xl mx-auto bg-white p-6 rounded shadow">
-        <h1 className="text-2xl font-bold mb-6">
+    <div className="min-h-screen bg-pink-100 px-4 py-8">
+      <div className="max-w-4xl mx-auto bg-white p-6 md:p-8 rounded-xl shadow-sm">
+        <h1 className="text-2xl font-bold text-gray-800 mb-6">
           Cadastro de Endereços
         </h1>
 
-       
         <form
           onSubmit={formulario.handleSubmit(enviaFormulario)}
           noValidate
-          className="w-full"
+          className="space-y-6"
         >
-          <div className="grid grid-cols-12 gap-4">
-          
-            <div className="col-span-12 md:col-span-6 flex flex-col relative">
-              <label className="text-sm font-medium mb-1">CEP</label>
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
+            
+            <div className="md:col-span-6">
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                CEP
+              </label>
               <input
-                className="input"
+                className={`w-full px-3 py-2 border rounded-md transition
+                  focus:outline-none focus:ring-2
+                  ${
+                    erro.cep
+                      ? "border-red-500 focus:ring-red-500"
+                      : "border-gray-300 focus:ring-green-200"
+                  }`}
+                inputMode="numeric"
                 {...formulario.register("cep")}
               />
-              {formulario.formState.errors.cep && (
-                <p className="erro">
-                  {formulario.formState.errors.cep.message}
+              {erro.cep && (
+                <p className="text-xs text-red-600 mt-1">
+                  {erro.cep.message}
                 </p>
               )}
             </div>
 
-            <div className="col-span-12 md:col-span-6 flex flex-col relative">
-              <label className="text-sm font-medium mb-1">Rua</label>
+          
+            <div className="md:col-span-6">
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Rua
+              </label>
               <input
-                className="input"
+                className={`w-full px-3 py-2 border rounded-md transition
+                  focus:outline-none focus:ring-2
+                  ${
+                    erro.rua
+                      ? "border-red-500 focus:ring-red-500"
+                      : "border-gray-300  focus:ring-green-200"
+                  }`}
                 {...formulario.register("rua")}
               />
-              {formulario.formState.errors.rua && (
-                <p className="erro">
-                  {formulario.formState.errors.rua.message}
+              {erro.rua && (
+                <p className="text-xs text-red-600 mt-1">
+                  {erro.rua.message}
                 </p>
               )}
             </div>
 
-            <div className="col-span-12 md:col-span-4 flex flex-col relative">
-              <label className="text-sm font-medium mb-1">Número</label>
+          
+            <div className="md:col-span-4">
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Número
+              </label>
               <input
-                className="input"
+                className={`w-full px-3 py-2 border rounded-md transition
+                  focus:outline-none focus:ring-2
+                  ${
+                    erro.numero
+                      ? "border-red-500 focus:ring-red-500"
+                      : "border-gray-300 focus:ring-green-200"
+                  }`}
                 {...formulario.register("numero")}
               />
-              {formulario.formState.errors.numero && (
-                <p className="erro">
-                  {formulario.formState.errors.numero.message}
+              {erro.numero && (
+                <p className="text-xs text-red-600 mt-1">
+                  {erro.numero.message}
                 </p>
               )}
             </div>
 
-            <div className="col-span-12 md:col-span-4 flex flex-col relative">
-              <label className="text-sm font-medium mb-1">Bairro</label>
+           
+            <div className="md:col-span-4">
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Bairro
+              </label>
               <input
-                className="input"
+                className={`w-full px-3 py-2 border rounded-md transition
+                  focus:outline-none focus:ring-2
+                  ${
+                    erro.bairro
+                      ? "border-red-500 focus:ring-red-500"
+                      : "border-gray-300 focus:ring-green-200"
+                  }`}
                 {...formulario.register("bairro")}
               />
-              {formulario.formState.errors.bairro && (
-                <p className="erro">
-                  {formulario.formState.errors.bairro.message}
+              {erro.bairro && (
+                <p className="text-xs text-red-600 mt-1">
+                  {erro.bairro.message}
                 </p>
               )}
             </div>
 
-            <div className="col-span-12 md:col-span-4 flex flex-col relative">
-              <label className="text-sm font-medium mb-1">Cidade</label>
+            <div className="md:col-span-4">
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Cidade
+              </label>
               <input
-                className="input"
+                className={`w-full px-3 py-2 border rounded-md transition
+                  focus:outline-none focus:ring-2
+                  ${
+                    erro.cidade
+                      ? "border-red-500 focus:ring-red-500"
+                      : "border-gray-300 focus:ring-green-200"
+                  }`}
                 {...formulario.register("cidade")}
               />
-              {formulario.formState.errors.cidade && (
-                <p className="erro">
-                  {formulario.formState.errors.cidade.message}
+              {erro.cidade && (
+                <p className="text-xs text-red-600 mt-1">
+                  {erro.cidade.message}
                 </p>
               )}
             </div>
 
-            <div className="col-span-12 md:col-span-2 flex flex-col relative">
-              <label className="text-sm font-medium mb-1">UF</label>
+        
+            <div className="md:col-span-2">
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                UF
+              </label>
               <input
-                className="input uppercase"
+                className={`w-full px-3 py-2 border rounded-md uppercase transition
+                  focus:outline-none focus:ring-2
+                  ${
+                    erro.uf
+                      ? "border-red-500 focus:ring-red-500"
+                      : "border-gray-300 focus:ring-green-200"
+                  }`}
+                maxLength={2}
                 {...formulario.register("uf")}
               />
-              {formulario.formState.errors.uf && (
-                <p className="erro">
-                  {formulario.formState.errors.uf.message}
+              {erro.uf && (
+                <p className="text-xs text-red-600 mt-1">
+                  {erro.uf.message}
                 </p>
               )}
             </div>
           </div>
 
-          <div className="flex justify-end gap-4 mt-6">
+          <div className="flex justify-end gap-4">
             <button
               type="reset"
-              className="px-6 py-2 border rounded-md"
+              className="px-5 py-2 border border-gray-300 rounded-md
+                         text-gray-600 hover:bg-gray-100 transition"
             >
               Limpar
             </button>
             <button
               type="submit"
-              className="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+              className="px-5 py-2 bg-pink-400 text-white rounded-md
+                         hover:bg-pink-500 transition"
             >
               Cadastrar
             </button>
           </div>
         </form>
 
-        <h2 className="text-xl font-semibold mt-10 mb-4">
+        <h2 className="text-xl font-semibold text-gray-800 mt-10 mb-4">
           Endereços Cadastrados
         </h2>
 
         {enderecos.length === 0 ? (
           <p className="text-gray-500">
-            Nenhum endereço cadastrado.
+            
           </p>
         ) : (
           <ul className="space-y-3">
             {enderecos.map((endereco, index) => (
               <li
                 key={index}
-                className="border p-4 rounded bg-gray-50"
+                className="border border-gray-200 rounded-lg p-4 bg-gray-50"
               >
-                <p>
-                  {endereco.rua}, {endereco.numero} –{" "}
-                  {endereco.bairro}
+                <p className="font-medium text-gray-800">
+                  {endereco.rua}, {endereco.numero}
                 </p>
-                <p>
-                  {endereco.cidade}/{endereco.uf} – CEP:{" "}
-                  {endereco.cep}
+                <p className="text-sm text-gray-600">
+                  {endereco.bairro} – {endereco.cidade}/{endereco.uf}
+                </p>
+                <p className="text-xs text-gray-500">
+                  CEP: {endereco.cep}
                 </p>
               </li>
             ))}
