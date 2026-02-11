@@ -7,7 +7,7 @@ Este projeto é educacional e visa inserir os alunos do Curso Técnico de Desenv
 
 ### Issues criadas
 
-[Configuração do Projeto - Lista de Endereços](https://github.com/JessicaSiervi/projeto-lista-de-enderecos/issues/1) - ⚠ Em andamento
+[Configuração do Projeto - Lista de Endereços](https://github.com/JessicaSiervi/projeto-lista-de-enderecos/issues/1) - ✅ Finalizado
 
 [Validações de Entrada ](https://github.com/JessicaSiervi/projeto-lista-de-enderecos/issues/2) - ⚠ Em andamento
 
