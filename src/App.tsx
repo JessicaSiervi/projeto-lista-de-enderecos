@@ -1,129 +1,169 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
-import * as z from 'zod'
+import * as z from "zod"
 
+const regrasFormulario = z.object({
+  cep: z.string().min(1, "Campo obrigatório."),
+  rua: z.string().min(1, "Campo obrigatório."),
+  numero: z.string().min(1, "Campo obrigatório."),
+  bairro: z.string().min(1, "Campo obrigatório."),
+  cidade: z.string().min(1, "Campo obrigatório."),
+  uf: z.string().min(2, "Campo obrigatório.").max(2, "Utilizar sigla."),
+})
+
+type FormType = z.infer<typeof regrasFormulario>
 
 export function App() {
-  const [nome, setNome] = useState('')
-  const regrasFormulario = z.object({
-    cep: z.string().min(1, 'Campo obrigatório.'),
-    rua: z.string().min(1, 'Campo obrigatório.'),
-    numero: z.string().min(1, 'Campo obrigatório.'),
-    bairro: z.string().min(1, 'Campo obrigatório.'),
-    cidade: z.string().min(1, 'Campo obrigatório.'),
-    uf: z.string().min(1, 'Campo obrigatório.').max(2, 'Utilizar sigla.')
-  })
+  const [enderecos, setEnderecos] = useState<FormType[]>([])
 
-  type FormType = z.infer<typeof regrasFormulario>
-
-  
   const formulario = useForm<FormType>({
-    resolver: zodResolver(regrasFormulario)
+    resolver: zodResolver(regrasFormulario),
   })
 
-  console.log("Erros do formulário -> ", formulario.formState.errors)
-  function enviaFormulario() {
+  function enviaFormulario(dados: FormType) {
+    setEnderecos((prev) => [...prev, dados])
+    formulario.reset()
   }
 
   return (
-    <>
-      <div>
-        <h1 className="font-sans">Cadastro de Cliente</h1>
-        <form onSubmit={formulario.handleSubmit(enviaFormulario)} noValidate className="w-full max-w-4xl mx-auto">
+    <div className="min-h-screen bg-gray-100 p-6">
+      <div className="max-w-4xl mx-auto bg-white p-6 rounded shadow">
+        <h1 className="text-2xl font-bold mb-6">
+          Cadastro de Endereços
+        </h1>
+
+       
+        <form
+          onSubmit={formulario.handleSubmit(enviaFormulario)}
+          noValidate
+          className="w-full"
+        >
           <div className="grid grid-cols-12 gap-4">
-            <div className="col-span-12 flex flex-col py-1 relative">
-              <label htmlFor="nome" className="text-sm font-medium text-gray-700 mb-1">Nome</label>
+          
+            <div className="col-span-12 md:col-span-6 flex flex-col relative">
+              <label className="text-sm font-medium mb-1">CEP</label>
               <input
-                className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
-                type="text"
-                {...formulario.register('nome')}
+                className="input"
+                {...formulario.register("cep")}
               />
-              {formulario.formState.errors.nome && <p className="text-red-500 text-xs mt-1 absolute -bottom-3 left-0">{formulario.formState.errors.nome.message}</p>}
+              {formulario.formState.errors.cep && (
+                <p className="erro">
+                  {formulario.formState.errors.cep.message}
+                </p>
+              )}
             </div>
 
-            <div className="col-span-12 flex flex-col py-1 relative">
-              <label htmlFor="email" className="text-sm font-medium text-gray-700 mb-1">Email</label>
+            <div className="col-span-12 md:col-span-6 flex flex-col relative">
+              <label className="text-sm font-medium mb-1">Rua</label>
               <input
-                className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
-                type="email"
-                {...formulario.register('email')}
+                className="input"
+                {...formulario.register("rua")}
               />
-              {formulario.formState.errors.email && <p className="text-red-500 text-xs mt-1 absolute -bottom-3 left-0">{formulario.formState.errors.email.message}</p>}
+              {formulario.formState.errors.rua && (
+                <p className="erro">
+                  {formulario.formState.errors.rua.message}
+                </p>
+              )}
             </div>
 
-            <div className="col-span-12 md:col-span-6 flex flex-col py-1 relative">
-              <label htmlFor="cep" className="text-sm font-medium text-gray-700 mb-1">CEP</label>
+            <div className="col-span-12 md:col-span-4 flex flex-col relative">
+              <label className="text-sm font-medium mb-1">Número</label>
               <input
-                className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
-                type="text"
-                {...formulario.register('cep')}
+                className="input"
+                {...formulario.register("numero")}
               />
-              {formulario.formState.errors.cep && <p className="text-red-500 text-xs mt-1 absolute -bottom-3 left-0">{formulario.formState.errors.cep.message}</p>}
+              {formulario.formState.errors.numero && (
+                <p className="erro">
+                  {formulario.formState.errors.numero.message}
+                </p>
+              )}
             </div>
 
-            <div className="col-span-12 md:col-span-6 flex flex-col py-1 relative">
-              <label htmlFor="rua" className="text-sm font-medium text-gray-700 mb-1">Rua</label>
+            <div className="col-span-12 md:col-span-4 flex flex-col relative">
+              <label className="text-sm font-medium mb-1">Bairro</label>
               <input
-                className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
-                type="text"
-                {...formulario.register('rua')}
+                className="input"
+                {...formulario.register("bairro")}
               />
-              {formulario.formState.errors.rua && <p className="text-red-500 text-xs mt-1 absolute -bottom-3 left-0">{formulario.formState.errors.rua.message}</p>}
+              {formulario.formState.errors.bairro && (
+                <p className="erro">
+                  {formulario.formState.errors.bairro.message}
+                </p>
+              )}
             </div>
 
-            <div className="col-span-12 md:col-span-6 flex flex-col py-1 relative">
-              <label htmlFor="numero" className="text-sm font-medium text-gray-700 mb-1">Número</label>
+            <div className="col-span-12 md:col-span-4 flex flex-col relative">
+              <label className="text-sm font-medium mb-1">Cidade</label>
               <input
-                className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
-                type="text"
-                {...formulario.register('numero')}
+                className="input"
+                {...formulario.register("cidade")}
               />
-              {formulario.formState.errors.numero && <p className="text-red-500 text-xs mt-1 absolute -bottom-3 left-0">{formulario.formState.errors.numero.message}</p>}
+              {formulario.formState.errors.cidade && (
+                <p className="erro">
+                  {formulario.formState.errors.cidade.message}
+                </p>
+              )}
             </div>
 
-            <div className="col-span-12 md:col-span-6 flex flex-col py-1 relative">
-              <label htmlFor="bairro" className="text-sm font-medium text-gray-700 mb-1">Bairro</label>
+            <div className="col-span-12 md:col-span-2 flex flex-col relative">
+              <label className="text-sm font-medium mb-1">UF</label>
               <input
-                className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
-                type="text"
-                {...formulario.register('bairro')}
+                className="input uppercase"
+                {...formulario.register("uf")}
               />
-              {formulario.formState.errors.bairro && <p className="text-red-500 text-xs mt-1 absolute -bottom-3 left-0">{formulario.formState.errors.bairro.message}</p>}
-            </div>
-
-            <div className="col-span-12 md:col-span-6 flex flex-col py-1 relative">
-              <label htmlFor="cidade" className="text-sm font-medium text-gray-700 mb-1">Cidade</label>
-              <input
-                className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
-                type="text"
-                {...formulario.register('cidade')}
-              />
-              {formulario.formState.errors.cidade && <p className="text-red-500 text-xs mt-1 absolute -bottom-3 left-0">{formulario.formState.errors.cidade.message}</p>}
-            </div>
-
-            <div className="col-span-12 md:col-span-6 flex flex-col py-1 relative">
-              <label htmlFor="uf" className="text-sm font-medium text-gray-700 mb-1">UF</label>
-              <input
-                className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
-                type="text"
-                {...formulario.register('uf')}
-              />
-              {formulario.formState.errors.uf && <p className="text-red-500 text-xs mt-1 absolute -bottom-3 left-0">{formulario.formState.errors.uf.message}</p>}
+              {formulario.formState.errors.uf && (
+                <p className="erro">
+                  {formulario.formState.errors.uf.message}
+                </p>
+              )}
             </div>
           </div>
 
-          <div className="flex gap-4 mt-6 justify-end">
+          <div className="flex justify-end gap-4 mt-6">
             <button
-              className="px-6 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 transition font-medium"
               type="reset"
+              className="px-6 py-2 border rounded-md"
             >
               Limpar
             </button>
             <button
-              className="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition font-medium"
               type="submit"
+              className="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
             >
-              Enviar
+              Cadastrar
             </button>
           </div>
+        </form>
+
+        <h2 className="text-xl font-semibold mt-10 mb-4">
+          Endereços Cadastrados
+        </h2>
+
+        {enderecos.length === 0 ? (
+          <p className="text-gray-500">
+            Nenhum endereço cadastrado.
+          </p>
+        ) : (
+          <ul className="space-y-3">
+            {enderecos.map((endereco, index) => (
+              <li
+                key={index}
+                className="border p-4 rounded bg-gray-50"
+              >
+                <p>
+                  {endereco.rua}, {endereco.numero} –{" "}
+                  {endereco.bairro}
+                </p>
+                <p>
+                  {endereco.cidade}/{endereco.uf} – CEP:{" "}
+                  {endereco.cep}
+                </p>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </div>
+  )
+}
